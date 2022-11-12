@@ -1,4 +1,4 @@
-package com.example.beacon.vdf.application.vdfunicorn;
+package com.example.beacon.vdf.application.combination;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ public class MerkleTree {
         return root;
     }
 
-    MerkleTree(List<SeedUnicordCombinationVo> seedList){
+    public MerkleTree(List<SeedUnicordCombinationVo> seedList){
         buildTree(seedList);
     }
 

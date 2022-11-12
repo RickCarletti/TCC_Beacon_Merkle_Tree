@@ -7,6 +7,7 @@ import com.example.beacon.interfac.infra.ExternalEntity;
 import com.example.beacon.shared.ByteSerializationFields;
 import com.example.beacon.vdf.VdfSloth;
 import com.example.beacon.vdf.application.VdfSeedDto;
+import com.example.beacon.vdf.application.combination.MerkleTree;
 import com.example.beacon.vdf.application.combination.StatusEnum;
 import com.example.beacon.vdf.application.combination.dto.SeedUnicordCombinationVo;
 import com.example.beacon.vdf.infra.entity.VdfUnicornEntity;

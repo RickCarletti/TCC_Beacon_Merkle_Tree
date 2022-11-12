@@ -1,4 +1,4 @@
-package com.example.beacon.vdf.application.vdfunicorn;
+package com.example.beacon.vdf.application.combination;
 
 import br.gov.inmetro.beacon.library.ciphersuite.suite0.CipherSuiteBuilder;
 import br.gov.inmetro.beacon.library.ciphersuite.suite0.ICipherSuite;
