@@ -98,10 +98,12 @@ public class VdfUnicornService {
             currentValue = currentValue + dtoNew.getSeed();
         }
 
+        seedList.add(new SeedUnicordCombinationVo(dtoNew.getUri(), dtoNew.getSeed(), dtoNew.getDescription(), cipherSuite.getDigest(dtoNew.getSeed()), now));
         logger.warn("Current value: {}", currentValue);
-        String cumulativeDigest = cipherSuite.getDigest(currentValue);
-        logger.warn("Cumulative hash: {}", cumulativeDigest);
-        return new SeedUnicordCombinationVo(dtoNew.getUri(), dtoNew.getSeed(), dtoNew.getDescription(), cumulativeDigest, now);
+        MerkleTree tree = new MerkleTree(seedList); 
+        logger.warn("Top hash: {}", tree.getRoot());
+
+        return new SeedUnicordCombinationVo(dtoNew.getUri(), dtoNew.getSeed(), dtoNew.getDescription(), tree.getRoot().getHashValue(), now);
     }
 
     public void endTimeSlot() throws Exception {
