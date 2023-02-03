@@ -3,52 +3,35 @@ package com.example.beacon.vdf.application.combination;
 import br.gov.inmetro.beacon.library.ciphersuite.suite0.CipherSuiteBuilder;
 import br.gov.inmetro.beacon.library.ciphersuite.suite0.ICipherSuite;
 
-public class MerkleTreeNode {
+class MerkleTreeNode {
     private MerkleTreeNode left;
     private MerkleTreeNode right;
     private String hashValue;
     private String content;
+    private Integer lvl;
     
-    // public MerkleTreeNode getLeft() {
-    //     return left;
-    // }
-
-    // public void setLeft(MerkleTreeNode left) {
-    //     this.left = left;
-    // }
-
-    // public MerkleTreeNode getRight() {
-    //     return right;
-    // }
-
-    // public void setRight(MerkleTreeNode right) {
-    //     this.right = right;
-    // }
 
     public String getHashValue() {
         return hashValue;
     }
 
-    // public void setHashValue(String hashValue) {
-    //     this.hashValue = hashValue;
-    // }
-
     public String getContent() {
         return content;
     }
 
-    // public void setContent(String content) {
-    //     this.content = content;
-    // }
+    public Integer getLvl() {
+        return lvl;
+    }
 
     private static ICipherSuite cipherSuite = CipherSuiteBuilder.build(0);
 
     
-    public MerkleTreeNode(MerkleTreeNode left, MerkleTreeNode right, String hashValue, String c){
+    public MerkleTreeNode(MerkleTreeNode left, MerkleTreeNode right, String hashValue, String content, int lvl){
         this.left = left;
         this.right = right;
         this.hashValue = hashValue;
-        this.hashValue = hashValue;
+        this.content = content;
+        this.lvl = lvl;
     }
     
     public static String hash(String s){
@@ -56,6 +39,6 @@ public class MerkleTreeNode {
     }
 
     public MerkleTreeNode copy(){
-        return new MerkleTreeNode(left, right, hashValue, content);
+        return new MerkleTreeNode(left, right, hashValue, content, lvl+1);
     }
 }

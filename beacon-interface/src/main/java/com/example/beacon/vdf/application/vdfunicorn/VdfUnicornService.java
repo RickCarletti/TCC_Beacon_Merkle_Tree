@@ -102,7 +102,7 @@ public class VdfUnicornService {
         seedList.add(new SeedUnicordCombinationVo(dtoNew.getUri(), dtoNew.getSeed(), dtoNew.getDescription(), cipherSuite.getDigest(dtoNew.getSeed()), now));
         logger.warn("Current value: {}", currentValue);
         MerkleTree tree = new MerkleTree(seedList); 
-        logger.warn("Top hash: {}", tree.getRoot());
+        logger.warn("Top hash: {}", tree.getRoot().getHashValue());
 
         return new SeedUnicordCombinationVo(dtoNew.getUri(), dtoNew.getSeed(), dtoNew.getDescription(), tree.getRoot().getHashValue(), now);
     }

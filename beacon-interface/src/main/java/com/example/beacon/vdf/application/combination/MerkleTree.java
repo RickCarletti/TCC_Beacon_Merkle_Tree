@@ -5,12 +5,17 @@ import java.util.List;
 
 import com.example.beacon.vdf.application.combination.dto.SeedUnicordCombinationVo;
 
-public class MerkleTree {
+class MerkleTree {
     
     private MerkleTreeNode root;
+    List<MerkleTreeNode> nodes = new ArrayList<MerkleTreeNode>();
 
     public MerkleTreeNode getRoot() {
         return root;
+    }
+
+    public List<MerkleTreeNode> getList(){
+        return nodes;
     }
 
     public MerkleTree(List<SeedUnicordCombinationVo> seedList){
@@ -18,32 +23,27 @@ public class MerkleTree {
     }
 
     private void buildTree(List<SeedUnicordCombinationVo> seedList){
-        List<MerkleTreeNode> nodes = new ArrayList<MerkleTreeNode>();
         for(SeedUnicordCombinationVo seed:seedList){
-            nodes.add(new MerkleTreeNode(null, null, MerkleTreeNode.hash(seed.getSeed()), seed.getSeed()));
-        }
-        this.root = buildTreeRecursive(nodes);
-    }
-
-    private MerkleTreeNode buildTreeRecursive(List<MerkleTreeNode> nodes){
-        if(nodes.size() % 2 == 1){
-            nodes.add(nodes.get(nodes.size() - 1).copy());
-        }
-        int half = nodes.size() / 2;
-        if(nodes.size() == 2){
-            return new MerkleTreeNode(
-                nodes.get(0), 
-                nodes.get(1), 
-                MerkleTreeNode.hash(nodes.get(0).getHashValue() + nodes.get(1).getHashValue()), 
-                nodes.get(0).getContent() + "+" + nodes.get(1).getContent()
-            );
+            nodes.add(new MerkleTreeNode(null, null, MerkleTreeNode.hash(seed.getSeed()), seed.getSeed(), 0));
         }
 
-        MerkleTreeNode left = buildTreeRecursive(nodes.subList(0, half));
-        MerkleTreeNode right = buildTreeRecursive(nodes.subList(half, nodes.size()));
-        String hashValue = MerkleTreeNode.hash(left.getHashValue() + right.getHashValue());
-        String content = left.getContent() + "+" + right.getContent();
+        int pos = 0;
 
-        return new MerkleTreeNode(left, right, hashValue, content);
+        while(pos+1 < nodes.size()){
+            if(nodes.get(pos).getLvl() == nodes.get(pos+1).getLvl()){
+                nodes.add(new MerkleTreeNode(
+                    nodes.get(pos), 
+                    nodes.get(pos+1), 
+                    MerkleTreeNode.hash(nodes.get(pos).getHashValue() + nodes.get(pos+1).getHashValue()), 
+                    nodes.get(pos).getContent() + "+" + nodes.get(pos+1).getContent(), nodes.get(pos+1).getLvl()+1)
+                );
+                pos+=2;
+            }else{
+                nodes.add(nodes.get(pos).copy());
+                pos++;
+            }
+        }
+
+        this.root = nodes.get(nodes.size()-1);
     }
 }
